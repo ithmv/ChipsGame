@@ -1,6 +1,18 @@
 let userSum = 0;
 let compSum = 0;
 
+  function endGame() {
+    if (userSum > compSum) {
+      alert('Победа!');
+    } else if (compSum > userSum) {
+      alert('Проиграл!');
+      alert('Счет противника: ' + compSum);
+    } else {
+      alert('Ничья!');
+    }
+    location.reload();
+  }
+
 function updateCompSum() {
   const computerFishList = document.querySelectorAll('.computer div span');
   compSum = 0;
@@ -68,24 +80,15 @@ window.addEventListener('load', function() {
         computerField.append(clonedRandomFish);
         randomFish.classList.add('hidden');
         randomFish.remove();
-        updateCompSum();
+        updateCompSum(); // обновляем значение compSum после добавления новой фишки
+      }
+      if (field.childElementCount === 0) {
+        endGame();
       }
     });
   });
-
+  
   const stopButton = document.querySelector('.stop');
-  stopButton.addEventListener('click', () => {
-
-    if (userSum > compSum) {
-      alert('Победа!');
-    } else if (compSum > userSum) {
-      alert('Проиграл!');
-      alert('Счет противника: ' + compSum);
-    } else {
-      alert('Ничья!');
-    }
-    
-
-    location.reload();
-  });
+  stopButton.addEventListener('click', endGame);
+  
 });
