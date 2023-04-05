@@ -4,11 +4,50 @@ let compSum = 0;
 function updateCompSum() {
   const computerFishList = document.querySelectorAll('.computer div span');
   compSum = 0;
+  let count4 = 0;
+  let count5 = 0;
   computerFishList.forEach(fish => {
     const numbers = fish.textContent.split(' ');
-    compSum += parseInt(numbers[numbers.length - 1]);
+    const fishNum = parseInt(numbers[numbers.length - 1]);
+    compSum += fishNum;
+    if (fishNum === 4) {
+      count4++;
+    }
+    if (fishNum === 5) {
+      count5++;
+    }
   });
+
+  if (count5 > 1) {
+    alert('Компьютер остановил игру!');
+        if (userSum > compSum) {
+      alert('Победа!');
+    } else if (compSum > userSum) {
+      alert('Проиграл!');
+      alert('Счет противника: ' + compSum);
+    } else {
+      alert('Ничья!');
+    }
+    
+    location.reload();
+  }
+
+  if (count4 > 2) {
+    alert('Компьютер остановил игру!');
+        if (userSum > compSum) {
+      alert('Победа!');
+    } else if (compSum > userSum) {
+      alert('Проиграл!');
+      alert('Счет противника: ' + compSum);
+    } else {
+      alert('Ничья!');
+    }
+    
+    location.reload();
+  }
+  
 }
+
 
 window.addEventListener('load', function() {
   const field = document.querySelector('.field');
@@ -93,7 +132,6 @@ window.addEventListener('load', function() {
       alert('Ничья!');
     }
     
-
     location.reload();
   });
 });
