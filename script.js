@@ -1,18 +1,6 @@
 let userSum = 0;
 let compSum = 0;
 
-  function endGame() {
-    if (userSum > compSum) {
-      alert('Победа!');
-    } else if (compSum > userSum) {
-      alert('Проиграл!');
-      alert('Счет противника: ' + compSum);
-    } else {
-      alert('Ничья!');
-    }
-    location.reload();
-  }
-
 function updateCompSum() {
   const computerFishList = document.querySelectorAll('.computer div span');
   compSum = 0;
@@ -40,12 +28,20 @@ window.addEventListener('load', function() {
 
   fishColors.forEach((color, index) => {
     const fishes = document.querySelectorAll(`.field .fish_${color} span`);
-    const randomNumber = numbers[index];
-
-    fishes.forEach(fish => {
-      fish.textContent += ` ${randomNumber}`;
+    const numbers = [];
+    
+    while (numbers.length < fishes.length) {
+      const randomNumber = Math.floor(Math.random() * 5) + 1;
+      if (!numbers.includes(randomNumber)) {
+        numbers.push(randomNumber);
+      }
+    }
+    
+    fishes.forEach((fish, index) => {
+      fish.textContent += ` ${numbers[index]}`;
     });
   });
+  
 
   const fishList = document.querySelectorAll('.field div');
   const userField = document.querySelector('.user');
@@ -82,13 +78,22 @@ window.addEventListener('load', function() {
         randomFish.remove();
         updateCompSum(); // обновляем значение compSum после добавления новой фишки
       }
-      if (field.childElementCount === 0) {
-        endGame();
-      }
     });
   });
-  
+
   const stopButton = document.querySelector('.stop');
-  stopButton.addEventListener('click', endGame);
-  
+  stopButton.addEventListener('click', () => {
+
+    if (userSum > compSum) {
+      alert('Победа!');
+    } else if (compSum > userSum) {
+      alert('Проиграл!');
+      alert('Счет противника: ' + compSum);
+    } else {
+      alert('Ничья!');
+    }
+    
+
+    location.reload();
+  });
 });
