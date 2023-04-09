@@ -1,6 +1,46 @@
 let userSum = 0;
 let compSum = 0;
 
+
+
+
+let win = document.querySelector('.win');
+let lose = document.querySelector('.lose');
+let nothing = document.querySelector('.nothing');
+let compEnd = document.querySelector('.compEnd');
+
+
+
+
+function endGame() {
+  const spans = document.querySelectorAll('span');
+  spans.forEach((spans) => {
+    spans.style.display = 'block';
+  });
+
+  const scoreSpans = document.querySelectorAll('.user-score');
+  scoreSpans.forEach((span) => {
+    span.innerHTML = userSum;
+  });
+
+  const CompSpans = document.querySelectorAll('.comp-score');
+  CompSpans.forEach((span) => {
+    span.innerHTML = compSum;
+  });
+  
+
+  if (userSum > compSum) {
+    win.style.animation = 'winlose .3s ease-in-out forwards';
+  } else if (compSum > userSum) {
+    lose.style.animation = 'winlose .3s ease-in-out forwards';
+  } else {
+    nothing.style.animation = 'winlose .3s ease-in-out forwards';
+  }
+}
+
+
+
+
 function updateCompSum() {
   const computerFishList = document.querySelectorAll('.computer div span');
   compSum = 0;
@@ -18,35 +58,20 @@ function updateCompSum() {
     }
   });
 
-  if (count5 > 1) {
-    alert('Компьютер остановил игру!');
-        if (userSum > compSum) {
-      alert('Победа!');
-    } else if (compSum > userSum) {
-      alert('Проиграл!');
-      alert('Счет противника: ' + compSum);
-    } else {
-      alert('Ничья!');
-    }
-    
-    location.reload();
+  if (count5 > 0) {
+    compEnd.style.animation = 'compEnd .2s ease-in-out forwards';
+    compEnd.style.display = 'block';
+    endGame();
   }
 
-  if (count4 > 2) {
-    alert('Компьютер остановил игру!');
-        if (userSum > compSum) {
-      alert('Победа!');
-    } else if (compSum > userSum) {
-      alert('Проиграл!');
-      alert('Счет противника: ' + compSum);
-    } else {
-      alert('Ничья!');
-    }
-    
-    location.reload();
+  if (count4 > 1) {
+    compEnd.style.animation = 'compEnd .2s ease-in-out forwards';
+    compEnd.style.display = 'block';
+    endGame();
   }
-  
 }
+
+
 
 
 window.addEventListener('load', function() {
@@ -115,23 +140,20 @@ window.addEventListener('load', function() {
         computerField.append(clonedRandomFish);
         randomFish.classList.add('hidden');
         randomFish.remove();
-        updateCompSum(); // обновляем значение compSum после добавления новой фишки
+        updateCompSum();
       }
     });
   });
 
   const stopButton = document.querySelector('.stop');
   stopButton.addEventListener('click', () => {
+    endGame();
+  });
 
-    if (userSum > compSum) {
-      alert('Победа!');
-    } else if (compSum > userSum) {
-      alert('Проиграл!');
-      alert('Счет противника: ' + compSum);
-    } else {
-      alert('Ничья!');
-    }
-    
-    location.reload();
+  const restartButtons = document.querySelectorAll('.restart');
+  restartButtons.forEach((restartButton) => {
+    restartButton.addEventListener('click', () => {
+      location.reload();
+    });
   });
 });
